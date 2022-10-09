@@ -1,3 +1,9 @@
+The grammar must be seperated by commas
+like this :
+**
+ E-> TP , P-> +TP | @ , T-> FQ,Q-> *FQ|@,F-> i|(E)
+**
+
 The actual cpp file is LLparser.cpp
 
 hence run : g++ LLparser.cpp && ./a.out input.txt
