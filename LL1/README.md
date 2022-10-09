@@ -1,6 +1,6 @@
-The actual cpp file is grammar.cpp
+The actual cpp file is LLparser.cpp
 
-hence run : g++ grammar.cpp && ./a.out input.txt
+hence run : g++ LLparser.cpp && ./a.out input.txt
 
 The input.txt contains the grammar which is to be given as input.
 
