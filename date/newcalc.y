@@ -23,34 +23,44 @@ line:  DE '\n'            {
                                  $1->v.date->print();
                           }
      ;
-DE:   DE '+' NUMBER       {         $$ = new ExprValue();
-                                    $$->v.date=new Date(*($1->v.date)+$3);
+DE:   DE '+' NUMBER       {       
+				$$ = new ExprValue();
+                                    $$->v.date= new Date(*($1->v.date)+($3));
                                     $$->vt=DATE_VALUE;
+                                  
                           }
-    |  DE '-' NUMBER      {         $$ = new ExprValue();
-                                    $$->v.date= new Date(*($1->v.date)-$3);
+    
+    | DE '-' DE      {	if($3->vt==INT_VALUE){
+				    $$ = new ExprValue();
+                                   
+                                    $$->v.date= new Date(*($1->v.date)-($3->v.number));
                                     $$->vt=DATE_VALUE;
-                           }
-    | DATE_TOKEN '-' DATE_TOKEN        {
+
+				}
+				else{
+
                                            $$ = new ExprValue();
-                                            $$->v.number=*$1-*$3;
+                                            $$->v.number=*($1->v.date)-*($3->v.date);
                                             $$->vt=INT_VALUE;
-                                      }
+			             }
+				}
+
     | NUMBER              {
                                 $$ = new ExprValue();
                                 $$->v.number=$1;
                                 $$->vt=INT_VALUE;
+			
                           }
     |  DATE_TOKEN         {
                              $$ = new ExprValue();
                              $$->v.date=new Date(*$1);
                              $$->vt=DATE_VALUE;
+			
                            }
     ;
         
 %%
-int main()
-{
+int main(){
  yyparse();
 }
 

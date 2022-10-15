@@ -48,7 +48,7 @@ Date Date::operator+(int obj){
 
          return res;
 }
-
+/*
 Date Date::operator-(int obj){
         Date res;
 		
@@ -81,6 +81,42 @@ Date Date::operator-(int obj){
 
          return res;
 }
+*/
+
+Date Date::operator - (int obj) {
+         Date res;
+
+                res.year=year-((obj/360));      
+                obj=obj%360;
+                res.month=month-(obj/30);
+                if(res.month<1)
+                {
+                res.month=12-(res.month);       
+                res.year-=1;
+                }
+                obj=obj%30;
+                int diff=day-obj;
+
+                if(diff>0){
+
+                res.day=diff;
+
+                }
+                else{
+                res.day=30+(diff);
+                if(res.month!=1){
+                res.month-=1;
+                }
+                else{
+                res.month=12;
+                res.year-=1;    
+                }
+                }
+
+         return res;
+    }
+
+
 
 int Date::operator-(Date obj){
         Date res;
@@ -104,3 +140,10 @@ void Date::print(){
 }
 
 
+/*
+  DE '-'  NUMBER      {        $$ = new ExprValue();
+                                    cout<<"Success"<<endl;
+                                    $$->v.date= new Date(*($1->v.date)-($3));
+                                    $$->vt=DATE_VALUE;
+                           }
+*/
