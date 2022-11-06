@@ -1,0 +1,9 @@
+int main(){
+	int a;
+	int b;
+	a=5;
+	b=a+a*10-a*8-a*2;
+	print a;
+	print b;
+	return 0;
+}
