@@ -61,26 +61,39 @@ void AssignmentAst::print(ostream& o){
 
 IntermediateCodeForAst & AssignmentAst :: generateIntermediateCode(){
 	cout<<"Ass ic"<<endl;
+	static int t_num=0;
+		string t0="a"+to_string(t_num);
+		t_num++;
+	SymbolTableEntry * se = new SymbolTableEntry(t0,nodeDataType,lineNumber);
 	list<Quadruple *> iCode;
 	IntermediateCodeForAst ls=lhs->generateIntermediateCode();
 	Quadruple * q = new Quadruple();
 	q->setResult(new Variable(ls.getSTE()));
-
+	//cout<<"--"<<ls.getSTE()->getVariableName()<<endl;
+	
 	IntermediateCodeForAst rs=rhs->generateIntermediateCode();
-	if(rs.getSTE())
+	if(rs.getSTE()){
 	q->setOpd1(new Variable(rs.getSTE()));
-	else{
-	q->setOpd1(rs.getICode().front()->getOpd1());
-	}
-	q->opCode=ic::ASSIGN;
 	list<Quadruple *> ll=rs.getICode();
 	for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
     iCode.push_back(*i);
+	}
+	else
+	q->setOpd1(rs.getICode().front()->getOpd1());
+	q->setOpd2(new Variable(se));
+	q->opCode=ic::ASSIGN;
+	iCode.push_back(q);
+	cout<<"-- ";
+	q->getResult()->print(cout);
+	cout<<endl;
+	q->getOpd1()->print(cout);
+	cout<<" --"<<endl;
 
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
+	icfa->setSTE(se);
 	return *icfa;
-
 }
+
 	//for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
     //iCode.push_back(*i);  
 	//for (list<Quadruple *>::iterator i=rs.getICode().begin(); i!=rs.getICode().end(); i++)
@@ -147,6 +160,7 @@ IntermediateCodeForAst & PrintAst :: generateIntermediateCode(){
 	list<Quadruple *> iCode;
 	Quadruple * q = new Quadruple();
 	q->setOpd1(new Variable(&var->getSymbolEntry()));
+	q->opCode=ic::PRINT;
 	iCode.push_back(q);
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
 	return *icfa;	
@@ -211,6 +225,7 @@ IntermediateCodeForAst & NameAst :: generateIntermediateCode(){
 	cout<<"Name ic"<<endl;
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst();
 	icfa->setSTE(variablesymbolentry);
+	cout<<variablesymbolentry->getVariableName()<<endl;
 	return *icfa;	
 }
 
@@ -279,7 +294,8 @@ IntermediateCodeForAst & ReturnAst :: generateIntermediateCode(){
 	cout<<"Return ic"<<endl;
 	list<Quadruple *> iCode;
 	Quadruple * q = new Quadruple();
-	q->setOpd1(new Constant<int>(7));
+	q->setOpd1(new Constant<int>(0));
+	q->opCode=ic::GOTO;
 	iCode.push_back(q);
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
 	return *icfa;	
@@ -370,9 +386,9 @@ IntermediateCodeForAst & ArithmeticExprAst :: generateIntermediateCode(){
 	{
 	case 0:	q->opCode=ic::PLUS;
 		break;
-	case 1:		q->opCode=ic::MINUS;
+	case 1:	q->opCode=ic::MINUS;
 		break;
-	case 2: 	q->opCode=ic::MULTIPLY;
+	case 2: q->opCode=ic::MULTIPLY;
 		break;
 	case 3:	q->opCode=ic::DIVIDE;
 		break;
@@ -418,11 +434,71 @@ RelationalExprAst :: RelationalExprAst(Ast *a, Ast *b,RelationalOp c){
 }
 
 IntermediateCodeForAst & RelationalExprAst :: generateIntermediateCode(){
+	cout<<"RelationalExprAst ic"<<endl;
+	static int t_num=0;
+		string t0="t"+to_string(t_num);
+		t_num++;
+	list<Quadruple *> iCode;
+		SymbolTableEntry * se = new SymbolTableEntry(t0,nodeDataType,lineNumber);
+	Quadruple * q = new Quadruple();
+		//q->setResult(new Variable(ls.getSTE()));
+		IntermediateCodeForAst ls=l->generateIntermediateCode();
+		if(ls.getSTE()){
+		q->setOpd1(new Variable(ls.getSTE()));
+		list<Quadruple *> ll=ls.getICode();
+		for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
+    	iCode.push_back(*i);
+		}
+		else{
+		q->setOpd1(ls.getICode().front()->getOpd1());
+		}
+
+	IntermediateCodeForAst rs=r->generateIntermediateCode();
+	if(rs.getSTE()){
+	q->setOpd2(new Variable(rs.getSTE()));
+	list<Quadruple *> ll=rs.getICode();
+	for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
+    iCode.push_back(*i);
+	}
+	else{
+	q->setOpd2(rs.getICode().front()->getOpd1());
+	}
+
+	switch (rOp)
+	{
+	case 0:	q->opCode=ic::LESSTHAN;
+		break;
+	case 5:	q->opCode=ic::LESSTHANOREQUALTO;
+		break;
+	case 1: q->opCode=ic::GREATERTHAN;
+		break;
+	case 4:	q->opCode=ic::GREATERTHANOREQUALTO;
+		break;
+	case 2:	q->opCode=ic::EQUALTO;
+		break;
+	case 3:	q->opCode=ic::NOTEQUALTO;
+		break;
+
+	default:
+		break;
+	}
+
+	q->setResult(new Variable(se));
+
+	iCode.push_back(q);
+
+	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
+	icfa->setSTE(se);
+	return *icfa;
 
 }
  
 void RelationalExprAst :: print(ostream & o){
-
+	o<<"RELATIONAL"<<endl;
+	l->print(o);
+	o<<"\t\t"<<rOp<<endl;
+	r->print(o);
+	o<<endl;
 }
 
 bool RelationalExprAst :: typeCheckAst(){
@@ -436,11 +512,65 @@ LogicalExprAst :: LogicalExprAst(Ast *a, Ast *b,LogicalOp c){
 }
 
 IntermediateCodeForAst & LogicalExprAst :: generateIntermediateCode(){
+	cout<<"LogicalExprAst ic"<<endl;
+	static int t_num=0;
+		string t0="t"+to_string(t_num);
+		t_num++;
+	list<Quadruple *> iCode;
+		SymbolTableEntry * se = new SymbolTableEntry(t0,nodeDataType,lineNumber);
+	Quadruple * q = new Quadruple();
+		//q->setResult(new Variable(ls.getSTE()));
+		IntermediateCodeForAst ls=l->generateIntermediateCode();
+		if(ls.getSTE()){
+		q->setOpd1(new Variable(ls.getSTE()));
+		list<Quadruple *> ll=ls.getICode();
+		for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
+    	iCode.push_back(*i);
+		}
+		else{
+		q->setOpd1(ls.getICode().front()->getOpd1());
+		}
 
+	IntermediateCodeForAst rs=r->generateIntermediateCode();
+	if(rs.getSTE()){
+	q->setOpd2(new Variable(rs.getSTE()));
+	list<Quadruple *> ll=rs.getICode();
+	for (list<Quadruple *>::iterator i=ll.begin(); i!=ll.end(); i++)
+    iCode.push_back(*i);
+	}
+	else{
+	q->setOpd2(rs.getICode().front()->getOpd1());
+	}
+
+	switch (lOp)
+	{
+	case 0:	q->opCode=ic::AND;
+		break;
+	case 1:	q->opCode=ic::OR;
+		break;
+	case 2: q->opCode=ic::NOT;
+		break;
+	
+	default:
+		break;
+	}
+
+	q->setResult(new Variable(se));
+
+	iCode.push_back(q);
+
+	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
+	icfa->setSTE(se);
+	return *icfa;
 }
  
 void LogicalExprAst :: print(ostream & o){
-
+	o<<"LOGICAL"<<endl;
+	if(l)
+	l->print(o);
+	o<<"\t\t"<<lOp<<endl;
+	r->print(o);
+	o<<endl;
 }
 
 bool LogicalExprAst :: typeCheckAst(){
@@ -450,15 +580,85 @@ bool LogicalExprAst :: typeCheckAst(){
 IfElseStmtAst :: IfElseStmtAst(Ast *a, Ast *b, Ast* c){
 	cond=a;
 	ifPart=b;
-	elseAst=c;
+	elsePart=c;
 }
 
 IntermediateCodeForAst & IfElseStmtAst :: generateIntermediateCode(){
+	cout<<"IfElseStmt ic"<<endl;
+	static int t_num=0;
+		string t0="b"+to_string(t_num);
+		t_num++;
+		list<Quadruple *> iCode;
+		SymbolTableEntry * se = new SymbolTableEntry(t0,nodeDataType,lineNumber);
+		Quadruple * q1 = new Quadruple();
 
+		IntermediateCodeForAst cs=cond->generateIntermediateCode();
+		if(cs.getSTE()){
+		q1->setOpd1(new Variable(cs.getSTE()));
+		list<Quadruple *> ll=cs.getICode();
+		for (list<Quadruple *>::reverse_iterator i=ll.rbegin(); i!=ll.rend(); i++)
+    	iCode.push_back(*i);
+		}
+		else{
+		q1->setOpd1(cs.getICode().front()->getOpd1());
+		}
+
+		q1->opCode=ic::IF;
+		q1->setOpd2(new Variable(se));
+		//q->setResult(new Variable(ls.getSTE()));
+
+		IntermediateCodeForAst ls=ifPart->generateIntermediateCode();
+		if(ls.getSTE()){
+		cout<<"down if"<<endl;
+		q1->setResult(new Variable(ls.getSTE()));
+		
+		}
+		else{
+		q1->setOpd1(ls.getICode().front()->getOpd1());
+		}
+
+		iCode.push_back(q1);
+		list<Quadruple *> ll=ls.getICode();
+		for (list<Quadruple *>::reverse_iterator i=ll.rbegin(); i!=ll.rend(); i++)
+    	iCode.push_back(*i);
+
+	if(elsePart){
+		cout<<"in else part"<<endl;
+		Quadruple *q=new Quadruple();
+	IntermediateCodeForAst rs=elsePart->generateIntermediateCode();
+	if(rs.getSTE()){
+	q->setOpd1(new Variable(rs.getSTE()));
+	
+	}
+	else{
+	q->setOpd1(rs.getICode().front()->getOpd1());
+	}
+
+	q->opCode=ic::ELSE;
+
+	iCode.push_back(q);
+	list<Quadruple *> ll=rs.getICode();
+	for (list<Quadruple *>::reverse_iterator i=ll.rbegin(); i!=ll.rend(); i++)
+    iCode.push_back(*i);
+	}
+	iCode.reverse();
+	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
+	icfa->setSTE(se);
+	cout<<"end ifelse stmt ic "<<endl;
+	return *icfa;
 }
  
 void IfElseStmtAst :: print(ostream & o){
-
+	o<<"IF"<<endl;
+	cond->print(o);
+	ifPart->print(o);
+	if(elsePart){
+	o<<"ELSE"<<endl;
+	elsePart->print(o);
+	}
+	else
+	o<<"NO ELSE";
+	o<<endl;
 }
 
 bool IfElseStmtAst :: typeCheckAst(){

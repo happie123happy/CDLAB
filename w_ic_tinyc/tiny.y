@@ -49,15 +49,15 @@
 %token IF
 %token ELSE
 %token UNARY
-%token LE
-%token GE
-%token EQ
-%token NE
-%token GT
-%token LT
-%token AAND
-%token OOR
-%token NNOT
+%token <cval> LE
+%token <cval> GE
+%token <cval> EQ
+%token <cval> NE
+%token <cval> GT
+%token <cval> LT
+%token <cval> AAND
+%token <cval> OOR
+%token <cval> NNOT
 
 %token <ch> SUBTRACT
 %token <ch> MUL
@@ -79,10 +79,10 @@
 %type <a> assign_stmt return_main
 %type <la> assign_stmt_list print_stmt_list if_else_stmt_list stmt_list local_decl_optional
 %type <ste> vardecl
-%type <cval> id
+%type <cval> id relop
 %type <dt> int void returnty double
 %type <a> constant
-%type <a> expr
+%type <a> expr relexpr logical_expr
 %type <dval> double_const 
 %type <ch> arithop
 %%
@@ -117,6 +117,7 @@ returnty:int{$$=$1;}
 ;
 
 program: returnty ID '('')' '{' body return_main '}'	{
+							//cout<<"program"<<endl;
 							pr=new Program();
 							$$=pr;
 							string s=$2;
@@ -165,31 +166,79 @@ print_stmt_list:  PRINT id ';'	{
 				}
 ;
 
-if_else_stmt_list: IF '(' logical_expr ')' '{' stmt_list '}' ELSE '{' stmt_list '}' {	
 
+if_else_stmt_list: IF '(' logical_expr ')' '{' stmt_list '}' ELSE '{' assign_stmt '}' {	
+	cout<<"in ifelse"<<endl;
+	$$=new list<Ast*>();
+    Ast * n = new IfElseStmtAst($3,$6->front(),$10);
+	$$->push_back(n);
 }
 | IF '(' logical_expr ')' '{' stmt_list '}' {
-
+	cout<<"in if"<<endl;
+	$$=new list<Ast*>();
+    Ast * n = new IfElseStmtAst($3,$6->front(),NULL);
+	$$->push_back(n);
 }
 ;
 
-logical_expr : logical_expr AAND logical_expr {}
-| logical_expr OOR logical_expr {}
-| NNOT logical_expr {}
-| relexpr	{}
+logical_expr : logical_expr AAND logical_expr {
+	$$ = new LogicalExprAst($1,$3,AND);
+    //$$->push_back(n);
+}
+| logical_expr OOR logical_expr {	
+	$$ = new LogicalExprAst($1,$3,OR);
+
+}
+| NNOT logical_expr {
+	$$ = new LogicalExprAst($2,NULL,NOT);
+
+}
+| relexpr	{
+	$$=$1;
+}
 ;
 
 relexpr : expr relop expr {
+	
+	if(strcmp($2,"<=")==0)
+			$$= new RelationalExprAst($1,$3,LESSTHANOREQUALTO);
+	else if(strcmp($2,">=")==0)
+			$$= new RelationalExprAst($1,$3,GREATERTHANOREQUALTO);
+	else if(strcmp($2,"==")==0)
+			$$= new RelationalExprAst($1,$3,EQUALTO);
+	else if(strcmp($2,"!=")==0)
+			$$= new RelationalExprAst($1,$3,NOTEQUALTO);
+	else if(strcmp($2,">")==0)
+			$$= new RelationalExprAst($1,$3,GREATERTHAN);
+	else if(strcmp($2,"<")==0)
+			$$= new RelationalExprAst($1,$3,LESSTHAN);
+	else{
+			cout<<$2<<endl;
+			cout<<"default"<<endl;
+			break;
+		}
 
 }
 ;
 
-relop:  LT
-| GT
-| LE
-| GE
-| NE
-| EQ
+/* 
+case "&&":
+			$$= new LogicalExprAst($1,$3,AND);
+			break;
+			case "||":
+			$$= new LogicalExprAst($1,$3,OR);
+			break;
+			case "!":
+			$$= new LogicalExprAst($1,$3,NOT);
+			break;
+*/
+
+relop:  LT {$$=$1;}
+| GT {$$=$1;}
+| LE {$$=$1;}
+| GE {$$=$1;}
+| NE {$$=$1;}
+| EQ {$$=$1;}
 
 ;
 
@@ -211,6 +260,12 @@ assign_stmt_list: assign_stmt {
 					}
 ;
 
+/* 
+| assign_stmt_list assign_stmt {	
+						($1)->push_back($2);
+						$$=$1;
+					}
+*/
 
 assign_stmt:	
 		id '=' id ';'{  
@@ -297,7 +352,7 @@ local_decl_optional:	vardecl local_decl_optional{
 							$$=$2;
 						}
 
-			| vardecl		{
+			| vardecl	{
 						$$=new list<Ast*>();
 						Ast * nast=new NameAst(*$1,lineno);
 						gst->pushSymbol($1);

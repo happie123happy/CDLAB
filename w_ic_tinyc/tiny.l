@@ -51,15 +51,33 @@ return {tokenList.push_back(new toks("RETURN","return",lineno));return RETURN;}
 "if"	                    {cout<<yytext<<endl;tokenList.push_back(new toks("IF",yytext,lineno)); return IF; }
 "else"	                    {cout<<yytext<<endl;tokenList.push_back(new toks("ELSE",yytext,lineno)); return ELSE; }
 {unary}                     {cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return UNARY; }
-"<="                        {cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LE; }
-">="                        {cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GE; }
-"=="                        {cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return EQ; }
-"!="                        {cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return NE; }
-">"	                    	{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GT; }
-"<"	                    	{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LT; }
-"&&"	                    {cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return AAND; }
-"||"	                    {cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return OOR; }
-"!"						{cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno));return NNOT;}
+"<="                        {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LE; }
+">="                        {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GE; }
+"=="                        {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return EQ; }
+"!="                        {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return NE; }
+">"	                    	{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GT; }
+"<"	                    	{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LT; }
+"&&"	                    {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return AAND; }
+"||"	                    {yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return OOR; }
+"!"						{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno));return NNOT;}
 
 "-"						{yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return SUBTRACT;}
 "*"						{yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return MUL;}

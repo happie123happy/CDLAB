@@ -69,13 +69,16 @@ Quadruple* Quadruple :: getNextInstAddr(){
 void Quadruple :: print(ostream & o ){
 
    cout<<"Quad run"<<endl; 
+   cout<<opCode<<endl;
    switch(opCode){
-case 0:		
+case 0:		if(opd2)
+            opd2->print(o);
+            o<<" : ";
             if(result)
-            result->print(o);
+            getResult()->print(o);
             else
             o<<"PRINT ";
-//cout<<opCode<<endl;
+            //cout<<opCode<<endl;
             o<<"=";
             if(opd1)
 		    opd1->print(o);
@@ -131,6 +134,102 @@ case 7: result->print(o);
         o<<"--";
         o<<endl;	
 		break;
+
+case 8: result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"<";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 9:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"<=";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 10:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<">";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 11:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<">=";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 12:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"==";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 13:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"!=";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 14:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"&&";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 15:result->print(o);
+        o<<" : ";
+	    opd1->print(o);
+        o<<"||";
+        opd2->print(o);
+        o<<endl;
+break;
+
+case 16:
+        o<<"!";
+        opd1->print(o);
+        o<<endl;
+break;
+
+case 17:opd2->print(o);
+        o<<" : ";
+        o<<"IF ";
+        opd1->print(o);
+	    o<<endl<<"\t THEN ";
+        result->print(o);
+        o<<endl;
+break;
+
+case 18://result->print(o);
+        o<<"ELSE ";
+	    opd1->print(o);
+        o<<endl;
+break;
+
+case 19://result->print(o);
+        o<<"GOTO ";
+	    opd1->print(o);
+        o<<endl;
+break;
+case 20://result->print(o);
+        o<<"PRINT ";
+	    opd1->print(o);
+        o<<endl;
+break;
 
 default:	
             cout<<"Invalid ic format"<<endl;

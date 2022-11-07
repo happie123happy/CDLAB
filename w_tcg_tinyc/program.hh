@@ -24,14 +24,8 @@ public:
 
         //functions added for code generation
 
-        //void generateTargetCode();
-    	//void printTargetCode(ostream &);
-
-	//functions added for intermediate code generation
-
-    void generateIntermediateCode();
-    void printIntermediateCode(ostream & o);
-
+        void generateTargetCode();
+        void printTargetCode(ostream &);
 
 };
 

@@ -836,76 +836,94 @@ YY_RULE_SETUP
 case 9:
 YY_RULE_SETUP
 #line 54 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LE; }
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 55 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GE; }
+#line 57 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 56 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return EQ; }
+#line 60 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return EQ; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return NE; }
+#line 63 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return NE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 58 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GT; }
+#line 66 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return GT; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 59 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LT; }
+#line 69 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("REL_OP",yytext,lineno)); return LT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 60 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return AAND; }
+#line 72 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return AAND; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 61 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return OOR; }
+#line 75 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno)); return OOR; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 62 "tiny.l"
-{cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno));return NNOT;}
+#line 78 "tiny.l"
+{yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
+                        strcpy(yylval.cval,yytext);
+						cout<<yytext<<endl;tokenList.push_back(new toks("LOG_OP",yytext,lineno));return NNOT;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 64 "tiny.l"
+#line 82 "tiny.l"
 {yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return SUBTRACT;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 65 "tiny.l"
+#line 83 "tiny.l"
 {yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return MUL;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 66 "tiny.l"
+#line 84 "tiny.l"
 {yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return DIVISION;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 67 "tiny.l"
+#line 85 "tiny.l"
 {yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return MODULUS;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 68 "tiny.l"
+#line 86 "tiny.l"
 {yylval.ch=yytext[0]; cout<<yytext<<endl;tokenList.push_back(new toks("OP",yytext,lineno));return ADDITION;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 71 "tiny.l"
+#line 89 "tiny.l"
 {	cout<<yytext<<endl;tokenList.push_back(new toks("NAME",yytext,lineno));
                         yylval.cval=(char*)malloc(sizeof(char)*strlen(yytext));
                         strcpy(yylval.cval,yytext);
@@ -913,41 +931,41 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 76 "tiny.l"
+#line 94 "tiny.l"
 {tokenList.push_back(new toks("INT",yytext,lineno)); cout<<yytext<<endl;  yylval.ival=atoi(yytext); return NUMBER;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 78 "tiny.l"
+#line 96 "tiny.l"
 {tokenList.push_back(new toks("DOUBLE",yytext,lineno)); cout<<yytext<<endl;  yylval.dval=atoi(yytext); return DOUB;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 81 "tiny.l"
+#line 99 "tiny.l"
 {tokenList.push_back(new toks("METACHAR",yytext,lineno)); return yytext[0];}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 83 "tiny.l"
+#line 101 "tiny.l"
 {}
 	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 85 "tiny.l"
+#line 103 "tiny.l"
 { lineno++;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 87 "tiny.l"
+#line 105 "tiny.l"
 {cout<<"Not defined in Lex"<<endl;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 89 "tiny.l"
+#line 107 "tiny.l"
 ECHO;
 	YY_BREAK
-#line 951 "lex.yy.c"
+#line 969 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1952,6 +1970,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 89 "tiny.l"
+#line 107 "tiny.l"
 
 

@@ -23,7 +23,9 @@ typedef enum{
    OR,
    NOT,
    IF,
-   GOTO
+   ELSE,
+   GOTO,
+   PRINT
 }OpCode;
 }
 
@@ -99,9 +101,11 @@ public:
 
 class IntermediateCodeForAst
 {
-	list<Quadruple *> iCode;
+   list<Quadruple *> iCode;
+
    // symbol entry of result variable
    SymbolTableEntry *symbolEntry;
+
 public:
 
 	IntermediateCodeForAst();

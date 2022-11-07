@@ -136,6 +136,7 @@ template <class T> void NumberAst<T>:: print(ostream& o){
 }
 
 template <class T> IntermediateCodeForAst& NumberAst<T> :: generateIntermediateCode(){
+	cout<<"Number ic"<<endl;
 	list<Quadruple *> iCode;
 	Quadruple * q = new Quadruple();
 	q->setOpd1(new Constant<T>(constant));
@@ -263,10 +264,13 @@ class LogicalExprAst:public ExprAst
     Ast *l;
     Ast *r;
     LogicalOp lOp;
+
  public:
+
     LogicalExprAst(Ast *, Ast *,LogicalOp);
     bool typeCheckAst();
     void print(ostream & filebuffer);
+
 	//functions added for code generation
     //virtual TargetCodeForAst & generateTargetCode();
 
@@ -279,7 +283,7 @@ class LogicalExprAst:public ExprAst
 class IfElseStmtAst:public Ast{
          Ast *cond;
          Ast  *ifPart;
-         Ast   *elseAst;
+         Ast   *elsePart;
    public:
     IfElseStmtAst(Ast *, Ast *,Ast *);
     bool typeCheckAst();

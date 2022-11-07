@@ -10,8 +10,7 @@ class SymbolTableEntry;
 
 typedef enum
 {
-	INT,
-	DOUBLE
+	INT
 } DataType;
 
 extern DataType a;
