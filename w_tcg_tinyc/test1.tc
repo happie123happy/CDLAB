@@ -4,8 +4,14 @@ int a;
 int b;
 a=11;
 b=10;
-b=a;
-print a;
-print b;
+if(a>b && b>9){
+ if(a==0){
+    b=a;
+    }
+}
+else{
+b=0;
+}
+
 return 0;
 }

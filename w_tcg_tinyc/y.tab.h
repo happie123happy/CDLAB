@@ -54,9 +54,27 @@ extern int yydebug;
     END = 260,
     RETURN = 261,
     VOID = 262,
-    PRINT = 263,
-    INTEGER = 264,
-    PRINTALL = 265
+    IF = 263,
+    ELSE = 264,
+    UNARY = 265,
+    LE = 266,
+    GE = 267,
+    EQ = 268,
+    NE = 269,
+    GT = 270,
+    LT = 271,
+    AAND = 272,
+    OOR = 273,
+    NNOT = 274,
+    SUBTRACT = 275,
+    MUL = 276,
+    DIVISION = 277,
+    MODULUS = 278,
+    ADDITION = 279,
+    DOUB = 280,
+    PRINT = 281,
+    INTEGER = 282,
+    PRINTALL = 283
   };
 #endif
 /* Tokens.  */
@@ -65,27 +83,48 @@ extern int yydebug;
 #define END 260
 #define RETURN 261
 #define VOID 262
-#define PRINT 263
-#define INTEGER 264
-#define PRINTALL 265
+#define IF 263
+#define ELSE 264
+#define UNARY 265
+#define LE 266
+#define GE 267
+#define EQ 268
+#define NE 269
+#define GT 270
+#define LT 271
+#define AAND 272
+#define OOR 273
+#define NNOT 274
+#define SUBTRACT 275
+#define MUL 276
+#define DIVISION 277
+#define MODULUS 278
+#define ADDITION 279
+#define DOUB 280
+#define PRINT 281
+#define INTEGER 282
+#define PRINTALL 283
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "tiny.y"
+#line 28 "tiny.y"
 
 	Program* pro;
+	char ch;
         SymbolTable* sym;
 	SymbolTableEntry * ste;
 	Function* func;
         char* cval;
 	int ival;
+	double dval;
 	Ast* a;
 	list<Ast*> *la;
 	DataType dt;
+	ExprAst *ea;
 
-#line 89 "y.tab.h"
+#line 128 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

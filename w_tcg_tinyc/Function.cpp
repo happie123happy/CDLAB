@@ -4,6 +4,7 @@ using namespace std;
 #include "Register.hh"
 #include "symboltable.hh"
 #include "codegeneration.hh"
+#include "IntermediateCode.hh"
 #include "ast.hh"
 #include "Function.hh"
 
@@ -92,6 +93,32 @@ list<Ast*> Function :: getAstlist(){
 return statementList;
 }
 
+
+void Function ::  generateIntermediateCode(){
+	cout<<"begin ic_function.cpp"<<endl;
+
+	localSymbolTable.assignOffsetsToSymbols();
+
+	for(auto i = statementList.begin();i!=statementList.end();i++){
+		IntermediateCodeForAst icfa = (*i)->generateIntermediateCode();
+		cout<<"__AST__"<<endl;
+		iCode.insert(iCode.begin(),icfa.getICode().begin(),icfa.getICode().end());
+	}
+
+cout<<"exit ic_function.cpp"<<endl;
+}
+
+
+void  Function :: printIntermediateCode(ostream & o){
+	    list<Quadruple* >::reverse_iterator i;
+        for (i = iCode.rbegin(); i != iCode.rend(); i++){
+	cout<<"Print InterCode"<<endl; 
+        (*i)->print(o);
+	}
+}
+
+
+/*
 void Function :: generateTargetCode(){
 cout<<"begin tg_function.cpp"<<endl;
 
@@ -106,7 +133,7 @@ cout<<"begin tg_function.cpp"<<endl;
 cout<<"exit tg_function.cpp"<<endl;
 
 }
-
+*/
 
 void Function::printPrologue(ostream & file_buffer)
 {
@@ -145,6 +172,7 @@ void Function::printEpilogue(ostream & file_buffer)
         file_buffer << epilogue.str();
 }
 
+/*
 void Function::printTargetCode(ostream & file_buffer)
 {
         printPrologue(file_buffer);
@@ -157,7 +185,7 @@ void Function::printTargetCode(ostream & file_buffer)
 
         printEpilogue(file_buffer);
 }
-
+*/
 
 
 //../tinyCC -symtab test.tc

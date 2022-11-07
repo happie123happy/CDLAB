@@ -4,15 +4,16 @@ using namespace std;
 #include "Register.hh"
 #include "symboltable.hh"
 #include "codegeneration.hh"
+#include "IntermediateCode.hh"
 #include "ast.hh"
 #include "Function.hh"
 #include "program.hh"
 #include "machinedescription.hh"
 
 Program::Program(){
-		cout<<"Machine Desc initialized"<<endl;
-		machineDes.initInstTable();
-		machineDes.initRegTable();
+		//cout<<"Machine Desc initialized"<<endl;
+		//machineDes.initInstTable();
+		//machineDes.initRegTable();
 	}
 
 Program::~Program(){}
@@ -76,7 +77,7 @@ bool Program:: variableInSymbolTableCheck(string s){
 	return globalSymbolTable.variableInSymbolListCheck(s);
 }
 
-
+/*
 void Program :: generateTargetCode(){
 	cout<<"begin tg_program.cpp"<<endl;
 	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
@@ -86,11 +87,32 @@ void Program :: generateTargetCode(){
 
 }
 
+
 void Program :: printTargetCode(ostream &o){
 	generateTargetCode();
 //	cout<<"TargetcodeGen completed"<<endl;
 	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
 //		cout<<"--- Function ---"<<endl;
                 (i->second)->printTargetCode(o);
+        }
+}
+
+*/
+
+
+void Program :: generateIntermediateCode(){
+	cout<<"begin ic_program.cpp"<<endl;
+	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
+		(i->second)->generateIntermediateCode();
+	}
+	cout<<"exit ic_program.cpp"<<endl;
+}
+
+void Program :: printIntermediateCode(ostream & o){
+	generateIntermediateCode();
+
+	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
+		cout<<"--- Function ---"<<endl;
+                (i->second)->printIntermediateCode(o);
         }
 }

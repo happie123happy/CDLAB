@@ -12,6 +12,9 @@ class Function
 	//datamember added for code generation
         list<Instruction *> instLlist;
 
+	//datamember added for Intermediate code geneartion
+	list<Quadruple*> iCode;
+
 public:
 	Function();
 	Function(DataType, string, int);
@@ -29,11 +32,16 @@ public:
 	void printSymbolTable(ostream &);
 	list<Ast*> getAstlist();
 
-        //functions added for code generation
-        void generateTargetCode();
-        void printTargetCode(ostream &);
+    //functions added for code generation
+        //void generateTargetCode();
+       // void printTargetCode(ostream &);
         void printPrologue(ostream &);
         void printEpilogue(ostream &);
+
+	//functions added for intermediate code generation
+
+    void generateIntermediateCode();
+    void printIntermediateCode(ostream &);
 
 };
 #endif
