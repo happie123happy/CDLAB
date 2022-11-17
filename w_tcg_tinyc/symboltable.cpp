@@ -106,7 +106,7 @@ list<SymbolTableEntry*>::reverse_iterator it;
          	       (*it)->setStartOffset(size);
 			size-=4;
 			(*it)->setEndOffset(size);
-			cout<<size<<endl;
+			//cout<<size<<endl;
         }
 }
 int SymbolTable :: size(){return totalSize;}

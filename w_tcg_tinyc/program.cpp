@@ -10,7 +10,7 @@ using namespace std;
 #include "machinedescription.hh"
 
 Program::Program(){
-		cout<<"Machine Desc initialized"<<endl;
+		//cout<<"Machine Desc initialized"<<endl;
 		machineDes.initInstTable();
 		machineDes.initRegTable();
 	}
@@ -78,11 +78,11 @@ bool Program:: variableInSymbolTableCheck(string s){
 
 
 void Program :: generateTargetCode(){
-	cout<<"begin tg_program.cpp"<<endl;
+	//cout<<"begin tg_program.cpp"<<endl;
 	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
 		(i->second)->generateTargetCode();
 	}
-	cout<<"exit tg_program.cpp"<<endl;
+	//cout<<"exit tg_program.cpp"<<endl;
 
 }
 

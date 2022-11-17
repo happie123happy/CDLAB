@@ -101,7 +101,7 @@ template <class T> void NumberAst<T>:: print(ostream& o){
 }
 
 template <class T> TargetCodeForAst & NumberAst<T>:: generateTargetCode(){
-cout<<"begin tg_Number Ast.cpp"<<endl;
+//cout<<"begin tg_Number Ast.cpp"<<endl;
 TargetCodeForAst *t=new TargetCodeForAst();
 OpCode o=OpCode::immloadw;
 InstructionFormat insf=op_r_o1;
@@ -111,7 +111,7 @@ ins->setResult(new RegOpd(new RegisterDescriptor(v0, "v0", RegisterValType:: INT
 ins->setOpd1(new ConstOpd<int>(constant));
 t->appendToInstList(ins);
 t->setReg(new RegisterDescriptor(v0, "v0",RegisterValType::  INT, int_reg));
-cout<<"end tg_Number Ast.cpp"<<endl; 
+//cout<<"end tg_Number Ast.cpp"<<endl; 
 return *t;
 }
 

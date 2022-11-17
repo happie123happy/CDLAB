@@ -56,7 +56,7 @@ void AssignmentAst::print(ostream& o){
 }
 
 TargetCodeForAst & AssignmentAst::generateTargetCode(){
-cout<<"begin tg_Ass Ast.cpp"<<endl;
+//cout<<"begin tg_Ass Ast.cpp"<<endl;
 list<Instruction *> pil;
 //cout<<"begin tg_Ass Ast.cpp"<<endl;
 TargetCodeForAst t;
@@ -74,7 +74,7 @@ Instruction * ins=new Instruction(id);
 ins->setResult(new RegOpd(machineDes.spimRegTable[v0]));
 //cout<<"begin tg_Ass Ast.cpp"<<endl;
 SymbolTableEntry ste=lhs->getSymbolEntry();
-cout<<ste.getStartOffset()<<endl;
+//cout<<ste.getStartOffset()<<endl;
 ins->setOpd1(new MemAddrOpd(ste));
 pil.push_back(ins);
 //cout<<"begin tg_Ass Ast.cpp"<<endl;
@@ -84,7 +84,7 @@ pil.push_back(*i);
 }
 
 TargetCodeForAst *at=new TargetCodeForAst(pil,machineDes.spimRegTable[v0]);
-cout<<"end tg_Ass Ast.cpp"<<endl;
+//cout<<"end tg_Ass Ast.cpp"<<endl;
 
 return *at;
 }
@@ -104,12 +104,12 @@ void PrintAst::print(ostream& o){
 }
 
 TargetCodeForAst & PrintAst::generateTargetCode(){
-cout<<"begin tg_print Ast.cpp"<<endl;
+//cout<<"begin tg_print Ast.cpp"<<endl;
 list<Instruction *> pil;
 TargetCodeForAst t=(var->generateTargetCode());
 OpCode o=OpCode :: immloadw;
 InstructionFormat insf=op_r_o1;
-cout<<"insf: "<<insf<<endl;
+//cout<<"insf: "<<insf<<endl;
 InstructionDescriptor id(o,"li",insf);
 Instruction * ins=new Instruction(id);
 ins->setResult(new RegOpd(machineDes.spimRegTable[v0]));
@@ -126,7 +126,7 @@ Instruction * ins1=new Instruction(id1);
 pil.push_back(ins1);
 pil.reverse();
 TargetCodeForAst *at=new TargetCodeForAst(pil,machineDes.spimRegTable[v0]);
-cout<<"end tg_print Ast.cpp"<<endl;
+//cout<<"end tg_print Ast.cpp"<<endl;
 return *at;
 }
 
@@ -150,7 +150,7 @@ void NameAst:: print(ostream& o){
 }
 
 TargetCodeForAst & NameAst:: generateTargetCode(){
-cout<<"begin tg_Name Ast.cpp"<<endl;
+//cout<<"begin tg_Name Ast.cpp"<<endl;
 TargetCodeForAst *t=new TargetCodeForAst();
 OpCode o=OpCode :: loadw;
 InstructionFormat insf=op_r_o1;
@@ -158,10 +158,10 @@ InstructionDescriptor id(o,"lw",insf);
 Instruction * ins=new Instruction(id);
 ins->setResult(new RegOpd(machineDes.spimRegTable[v0]));
 ins->setOpd1(new MemAddrOpd(getSymbolEntry()));
-cout<<getSymbolEntry().getStartOffset()<<endl;
+//cout<<getSymbolEntry().getStartOffset()<<endl;
 t->appendToInstList(ins);
 t->setReg(machineDes.spimRegTable[v0]);
-cout<<"end tg_Name Ast.cpp"<<endl;
+//cout<<"end tg_Name Ast.cpp"<<endl;
 return *t;
 }
 /*
@@ -208,13 +208,13 @@ void ReturnAst:: print(ostream& o){
 }
 
 TargetCodeForAst & ReturnAst:: generateTargetCode(){
-cout<<"begin tg_Return Ast.cpp"<<endl;
-cout<<"return"<<endl;
+//cout<<"begin tg_Return Ast.cpp"<<endl;
+//cout<<"return"<<endl;
 list<Instruction *> pil;
 
 OpCode o=OpCode :: immloadw;
 InstructionFormat insf=op_r_o1;
-cout<<"insf: "<<insf<<endl;
+//cout<<"insf: "<<insf<<endl;
 InstructionDescriptor id(o,"li",insf);
 Instruction * ins=new Instruction(id);
 ins->setResult(new RegOpd(machineDes.spimRegTable[v0]));
@@ -237,6 +237,6 @@ Instruction * ins1=new Instruction(id1);
 pil.push_back(ins1);
 pil.reverse();
 TargetCodeForAst *at=new TargetCodeForAst(pil,machineDes.spimRegTable[v0]);
-cout<<"end tg_Return Ast.cpp"<<endl;
+//cout<<"end tg_Return Ast.cpp"<<endl;
 return *at;
 }

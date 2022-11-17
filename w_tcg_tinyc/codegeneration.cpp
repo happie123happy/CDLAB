@@ -137,7 +137,7 @@ return instList;
 void TargetCodeForAst ::setInstList(list<Instruction *> l){
 //instList=l;
 for(auto i=l.begin();i!=l.end();i++){
-cout<<"i"<<endl;
+//cout<<"i"<<endl;
 instList.push_back(*i);
 }
 //cout<<"end sl"<<endl;

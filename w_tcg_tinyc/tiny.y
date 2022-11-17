@@ -198,7 +198,7 @@ digits:	digit digits	{$$=($1*10)+$2;}
 
 int main(int argc,char* argv[]){
 if(argc==3){
-cout<<"Inside"<<endl;
+//cout<<"Inside"<<endl;
 yyin=fopen(argv[2],"r");
 yyparse();
 

@@ -93,17 +93,17 @@ return statementList;
 }
 
 void Function :: generateTargetCode(){
-cout<<"begin tg_function.cpp"<<endl;
+//cout<<"begin tg_function.cpp"<<endl;
 
 	localSymbolTable.assignOffsetsToSymbols();
 	//list<Instruction *> :: iterator it;
 	for(auto i = statementList.begin();i!=statementList.end();i++){
 		TargetCodeForAst tcfa = (*i)->generateTargetCode();
-		cout<<"--- Ast ---"<<endl;
+//		cout<<"--- Ast ---"<<endl;
 		instLlist.insert(instLlist.begin(),tcfa.getInstlist().begin(),tcfa.getInstlist().end());
 	}
 
-cout<<"exit tg_function.cpp"<<endl;
+//cout<<"exit tg_function.cpp"<<endl;
 
 }
 
