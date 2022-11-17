@@ -68,8 +68,8 @@ Quadruple* Quadruple :: getNextInstAddr(){
 
 void Quadruple :: print(ostream & o ){
 
-   cout<<"Quad run"<<endl; 
-   cout<<opCode<<endl;
+//   cout<<"Quad run"<<endl; 
+//   cout<<opCode<<endl;
    switch(opCode){
 case 0:		if(opd2)
             opd2->print(o);
@@ -86,7 +86,7 @@ case 0:		if(opd2)
             o<<"NULL";
             o<<endl;
 		    break;
-case 1:
+case 1: o<<"\t";
 		result->print(o);
         o<<"=";
 	    opd1->print(o);
@@ -94,21 +94,24 @@ case 1:
         opd2->print(o);
         o<<endl;
 		break;
-case 2:	result->print(o);
+case 2:	o<<"\t";
+        result->print(o);
         o<<"=";
 	    opd1->print(o);
         o<<"-";
         opd2->print(o);
         o<<endl;
         break;
-case 3: result->print(o);
+case 3: o<<"\t";
+        result->print(o);
         o<<"=";
 	    opd1->print(o);
         o<<"*";
         opd2->print(o);
         o<<endl;
 		break;
-case 4: result->print(o);
+case 4: o<<"\t";
+        result->print(o);
         o<<"=";
 	    opd1->print(o);
         o<<"/";
@@ -235,7 +238,7 @@ default:
             cout<<"Invalid ic format"<<endl;
 		    break;
 }
-cout<<"end quad run"<<endl;
+//cout<<"end quad run"<<endl;
 }
 
 

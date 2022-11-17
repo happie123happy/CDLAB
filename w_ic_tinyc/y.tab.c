@@ -1590,7 +1590,7 @@ yyreduce:
   case 18:
 #line 170 "tiny.y"
                                                                                       {	
-	cout<<"in ifelse"<<endl;
+	//cout<<"in ifelse"<<endl;
 	(yyval.la)=new list<Ast*>();
     Ast * n = new IfElseStmtAst((yyvsp[-8].a),(yyvsp[-5].la)->front(),(yyvsp[-1].a));
 	(yyval.la)->push_back(n);
@@ -1601,7 +1601,7 @@ yyreduce:
   case 19:
 #line 176 "tiny.y"
                                             {
-	cout<<"in if"<<endl;
+	//cout<<"in if"<<endl;
 	(yyval.la)=new list<Ast*>();
     Ast * n = new IfElseStmtAst((yyvsp[-4].a),(yyvsp[-1].la)->front(),NULL);
 	(yyval.la)->push_back(n);
@@ -2199,7 +2199,7 @@ yyreturn:
 int main(int argc,char* argv[])
 {
 if(argc==3){
-cout<<"Inside"<<endl;
+//cout<<"Inside"<<endl;
 yyin=fopen(argv[2],"r");
 yyparse();
 
@@ -2270,6 +2270,7 @@ cout<<"\t\t\t-help/any     Show this help"<<endl;
 cout<<"\t\t\t-parse	  Stop processing with parsing"<<endl; 
 cout<<"\t\t\t-toks   Show the tokens in file.toks (or out.toks)"<<endl;
 cout<<"\t\t\t-ast      Show abstract syntax trees in file.ast (or out.ast)"<<endl;
+cout<<"\t\t\t-ic      Show intermediate code in file.ic "<<endl;
 cout<<"\t\t\t-symtab   Show the symbol table of delcarations in file.sy, (or out.sym)"<<endl;
 cout<<"\t\t\t-compile  Compile the program and generate spim code in file.spim (or out.spim)"<<endl;
 }

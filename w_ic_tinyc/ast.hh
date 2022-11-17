@@ -136,7 +136,7 @@ template <class T> void NumberAst<T>:: print(ostream& o){
 }
 
 template <class T> IntermediateCodeForAst& NumberAst<T> :: generateIntermediateCode(){
-	cout<<"Number ic"<<endl;
+//	cout<<"Number ic"<<endl;
 	list<Quadruple *> iCode;
 	Quadruple * q = new Quadruple();
 	q->setOpd1(new Constant<T>(constant));

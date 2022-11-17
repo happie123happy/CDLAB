@@ -60,7 +60,7 @@ void AssignmentAst::print(ostream& o){
 }
 
 IntermediateCodeForAst & AssignmentAst :: generateIntermediateCode(){
-	cout<<"Ass ic"<<endl;
+//	cout<<"Ass ic"<<endl;
 	static int t_num=0;
 		string t0="a"+to_string(t_num);
 		t_num++;
@@ -83,11 +83,11 @@ IntermediateCodeForAst & AssignmentAst :: generateIntermediateCode(){
 	q->setOpd2(new Variable(se));
 	q->opCode=ic::ASSIGN;
 	iCode.push_back(q);
-	cout<<"-- ";
-	q->getResult()->print(cout);
-	cout<<endl;
-	q->getOpd1()->print(cout);
-	cout<<" --"<<endl;
+//	cout<<"-- ";
+//	q->getResult()->print(cout);
+//	cout<<endl;
+//	q->getOpd1()->print(cout);
+//	cout<<" --"<<endl;
 
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
 	icfa->setSTE(se);
@@ -154,7 +154,7 @@ void PrintAst::print(ostream& o){
 }
 
 IntermediateCodeForAst & PrintAst :: generateIntermediateCode(){
-	cout<<"print ic"<<endl;
+//	cout<<"print ic"<<endl;
 	//IntermediateCodeForAst * icfa = new IntermediateCodeForAst();
 	//icfa->setSTE(&(var->getSymbolEntry()));
 	list<Quadruple *> iCode;
@@ -222,10 +222,10 @@ IntermediateCodeForAst & NameAst :: generateIntermediateCode(){
 	q->setResult(new Variable(variablesymbolentry));
 	iCode.push_back(q);
 	*/
-	cout<<"Name ic"<<endl;
+//	cout<<"Name ic"<<endl;
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst();
 	icfa->setSTE(variablesymbolentry);
-	cout<<variablesymbolentry->getVariableName()<<endl;
+	//cout<<variablesymbolentry->getVariableName()<<endl;
 	return *icfa;	
 }
 
@@ -291,7 +291,7 @@ void ReturnAst:: print(ostream& o){
 }
 
 IntermediateCodeForAst & ReturnAst :: generateIntermediateCode(){
-	cout<<"Return ic"<<endl;
+//	cout<<"Return ic"<<endl;
 	list<Quadruple *> iCode;
 	Quadruple * q = new Quadruple();
 	q->setOpd1(new Constant<int>(0));
@@ -352,7 +352,7 @@ ArithmeticExprAst :: ArithmeticExprAst(Ast *a, Ast *b,ArithmeticOp c){
 }
 
 IntermediateCodeForAst & ArithmeticExprAst :: generateIntermediateCode(){
-	cout<<"ArithmeticExprAst ic"<<endl;
+//	cout<<"ArithmeticExprAst ic"<<endl;
 	static int t_num=0;
 		string t0="t"+to_string(t_num);
 		t_num++;
@@ -434,7 +434,7 @@ RelationalExprAst :: RelationalExprAst(Ast *a, Ast *b,RelationalOp c){
 }
 
 IntermediateCodeForAst & RelationalExprAst :: generateIntermediateCode(){
-	cout<<"RelationalExprAst ic"<<endl;
+//	cout<<"RelationalExprAst ic"<<endl;
 	static int t_num=0;
 		string t0="t"+to_string(t_num);
 		t_num++;
@@ -512,7 +512,7 @@ LogicalExprAst :: LogicalExprAst(Ast *a, Ast *b,LogicalOp c){
 }
 
 IntermediateCodeForAst & LogicalExprAst :: generateIntermediateCode(){
-	cout<<"LogicalExprAst ic"<<endl;
+//	cout<<"LogicalExprAst ic"<<endl;
 	static int t_num=0;
 		string t0="t"+to_string(t_num);
 		t_num++;
@@ -565,7 +565,7 @@ IntermediateCodeForAst & LogicalExprAst :: generateIntermediateCode(){
 }
  
 void LogicalExprAst :: print(ostream & o){
-	o<<"LOGICAL"<<endl;
+//	o<<"LOGICAL"<<endl;
 	if(l)
 	l->print(o);
 	o<<"\t\t"<<lOp<<endl;
@@ -584,7 +584,7 @@ IfElseStmtAst :: IfElseStmtAst(Ast *a, Ast *b, Ast* c){
 }
 
 IntermediateCodeForAst & IfElseStmtAst :: generateIntermediateCode(){
-	cout<<"IfElseStmt ic"<<endl;
+//	cout<<"IfElseStmt ic"<<endl;
 	static int t_num=0;
 		string t0="b"+to_string(t_num);
 		t_num++;
@@ -609,7 +609,7 @@ IntermediateCodeForAst & IfElseStmtAst :: generateIntermediateCode(){
 
 		IntermediateCodeForAst ls=ifPart->generateIntermediateCode();
 		if(ls.getSTE()){
-		cout<<"down if"<<endl;
+		//cout<<"down if"<<endl;
 		q1->setResult(new Variable(ls.getSTE()));
 		
 		}
@@ -623,7 +623,7 @@ IntermediateCodeForAst & IfElseStmtAst :: generateIntermediateCode(){
     	iCode.push_back(*i);
 
 	if(elsePart){
-		cout<<"in else part"<<endl;
+//		cout<<"in else part"<<endl;
 		Quadruple *q=new Quadruple();
 	IntermediateCodeForAst rs=elsePart->generateIntermediateCode();
 	if(rs.getSTE()){
@@ -644,7 +644,7 @@ IntermediateCodeForAst & IfElseStmtAst :: generateIntermediateCode(){
 	iCode.reverse();
 	IntermediateCodeForAst * icfa = new IntermediateCodeForAst(iCode);
 	icfa->setSTE(se);
-	cout<<"end ifelse stmt ic "<<endl;
+//	cout<<"end ifelse stmt ic "<<endl;
 	return *icfa;
 }
  

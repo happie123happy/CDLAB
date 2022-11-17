@@ -95,24 +95,24 @@ return statementList;
 
 
 void Function ::  generateIntermediateCode(){
-	cout<<"begin ic_function.cpp"<<endl;
+//	cout<<"begin ic_function.cpp"<<endl;
 
 	localSymbolTable.assignOffsetsToSymbols();
 
 	for(auto i = statementList.begin();i!=statementList.end();i++){
 		IntermediateCodeForAst icfa = (*i)->generateIntermediateCode();
-		cout<<"__AST__"<<endl;
+//		cout<<"__AST__"<<endl;
 		iCode.insert(iCode.begin(),icfa.getICode().begin(),icfa.getICode().end());
 	}
 
-cout<<"exit ic_function.cpp"<<endl;
+//cout<<"exit ic_function.cpp"<<endl;
 }
 
 
 void  Function :: printIntermediateCode(ostream & o){
 	    list<Quadruple* >::reverse_iterator i;
         for (i = iCode.rbegin(); i != iCode.rend(); i++){
-	cout<<"Print InterCode"<<endl; 
+//	cout<<"Print InterCode"<<endl; 
         (*i)->print(o);
 	}
 }

@@ -101,18 +101,18 @@ void Program :: printTargetCode(ostream &o){
 
 
 void Program :: generateIntermediateCode(){
-	cout<<"begin ic_program.cpp"<<endl;
+//	cout<<"begin ic_program.cpp"<<endl;
 	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
 		(i->second)->generateIntermediateCode();
 	}
-	cout<<"exit ic_program.cpp"<<endl;
+//	cout<<"exit ic_program.cpp"<<endl;
 }
 
 void Program :: printIntermediateCode(ostream & o){
 	generateIntermediateCode();
 
 	for(auto i=FunctionMap.begin();i!=FunctionMap.end();i++){
-		cout<<"--- Function ---"<<endl;
+//		cout<<"--- Function ---"<<endl;
                 (i->second)->printIntermediateCode(o);
         }
 }
